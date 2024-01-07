@@ -31,7 +31,7 @@ const LINKS = [
 ];
 
 const PLACEHOLDER_LINKS = [
-  { text: 'Settings', href: '/features/tasks', icon: SettingsIcon }
+  { text: 'Settings', href: '/features/setttings', icon: SettingsIcon }
 ];
 
 export default function ComLayout({ children }: { children: React.ReactNode }) {

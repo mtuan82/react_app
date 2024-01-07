@@ -24,7 +24,6 @@ export default function LoginForm() {
     };
     var res = login(user);
     if (res.status == 200) {
-      alert('res.token ' + res.token)
       setErrorMsg("");
       router.push("/features/dashboard");
     }
