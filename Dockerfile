@@ -12,15 +12,6 @@ RUN npm install
 
 COPY . ./webapp
 
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
-
-# Set the correct permission for prerender cache
-RUN mkdir /webapp/.next
-RUN chown nextjs:nodejs .next
-
-USER root
-
 EXPOSE 4000
 
 ENV PORT 4000
