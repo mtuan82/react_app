@@ -1,16 +1,19 @@
-FROM node:18-alpine as builder
+FROM node:20-alpine as builder
 
 RUN mkdir /webapp
 WORKDIR /webapp
 
-RUN npm install next@latest react@latest react-dom@latest
-
 COPY package.json /webapp/package.json
 COPY package-lock.json /webapp/package-lock.json
 
-RUN npm install 
+USER root
 
-COPY . ./webapp
+RUN npm install next@14.1.0
+RUN npm install -g 
+
+COPY . .
+
+RUN npm run build
 
 EXPOSE 4000
 
@@ -18,4 +21,4 @@ ENV PORT 4000
 # set hostname to localhost
 ENV HOSTNAME "0.0.0.0"
 
-CMD ["npm","run","dev"]
+CMD ["npm","run","start"]

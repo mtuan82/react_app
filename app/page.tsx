@@ -4,7 +4,6 @@ import Grid from '@mui/material/Unstable_Grid2';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import MediaCard from './features/shared/MediaCard';
-import { deleteCookie } from 'cookies-next';
 
 export default function Home() {
   return (

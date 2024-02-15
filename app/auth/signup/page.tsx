@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { Typography } from '@mui/material';
 import Link from 'next/link';
 import { User } from "../../context/api/interfaces/User";
-import { authservice } from "../../context/api/services/authservice";
+import { login } from "../../context/api/services/authservice";
 
 export default function SignupForm() {
     const [username, setUsername] = useState("");
@@ -16,13 +16,13 @@ export default function SignupForm() {
     const [errorMsg, setErrorMsg] = useState("");
     const router = useRouter();
 
-    const login = (event: any): boolean => {
+    const loginUser = (event: any): boolean => {
         event.preventDefault();
         const user: User = {
             username: username,
             password: password
         };
-        var res = authservice.login(user);
+        var res = login(user);
         if (res.status == 200) {
             window.localStorage.setItem("token", res.token);
             setErrorMsg("");
@@ -44,7 +44,7 @@ export default function SignupForm() {
             }}
             noValidate
             autoComplete="off"
-            onSubmit={(event) => login(event) == true ? router.push("/features/dashboard") : alert(errorMsg)}
+            onSubmit={(event) => loginUser(event) == true ? router.push("/features/dashboard") : alert(errorMsg)}
         >
             <div style={{ display: 'inline-grid' }}>
                 <Typography sx={{ fontSize: 20, fontWeight: 1000 }}>Get started absolutely free</Typography>
