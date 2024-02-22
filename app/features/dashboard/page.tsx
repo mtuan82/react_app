@@ -1,45 +1,40 @@
+"use client"
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Unstable_Grid2';
-import Drawer from '@mui/material/Drawer';
-import Typography from '@mui/material/Typography';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import Alert from '@mui/material/Alert';
-import AlertTitle from '@mui/material/AlertTitle';
-import MediaCard from '../shared/MediaCard';
+import InfoCard from '../shared/InfoCard';
+import { BarChart } from '@mui/x-charts/BarChart';
+import { Block } from '@mui/icons-material';
 
 export default function Dashboard() {
   return (
-    <Box sx={{ display: 'flex', marginTop:0,paddingTop:0}}>
+    <Box sx={{ display: 'block' }} >
       <div>
-        <Alert severity="info" sx={{ mb: 5 }}>
-          <AlertTitle>Hello 👋</AlertTitle>
-          This app uses the Next.js App Router and Material UI v5.
-        </Alert>
-        <Grid container rowSpacing={3} columnSpacing={3}>
-          <Grid xs={6}>
-            <MediaCard
-              heading="CMYK"
-              text="The CMYK color model (also known as process color, or four color) is a subtractive color model, based on the CMY color model, used in color printing, and is also used to describe the printing process itself."
+        <Grid container rowSpacing={2} columnSpacing={2}>
+          <Grid xs={4}>
+            <InfoCard
+              heading="Orders"
+              text="1200"
             />
           </Grid>
-          <Grid xs={6}>
-            <MediaCard
-              heading="HSL and HSV"
-              text="HSL (for hue, saturation, lightness) and HSV (for hue, saturation, value; also known as HSB, for hue, saturation, brightness) are alternative representations of the RGB color model, designed in the 1970s by computer graphics researchers."
+          <Grid xs={4}>
+            <InfoCard
+              heading="Inventory"
+              text="5000"
             />
           </Grid>
-          <Grid xs={6}>
-            <MediaCard
-              heading="RGB"
-              text="An RGB color space is any additive color space based on the RGB color model. RGB color spaces are commonly found describing the input signal to display devices such as television screens and computer monitors."
+          <Grid xs={4}>
+            <InfoCard
+              heading="Return"
+              text="2500"
             />
           </Grid>
-          <Grid xs={6}>
-            <MediaCard
-              heading="CIELAB"
-              text="The CIELAB color space, also referred to as L*a*b*, was intended as a perceptually uniform space, where a given numerical change corresponds to a similar perceived change in color."
+          <Grid xs={12}>
+            <BarChart
+              xAxis={[{ scaleType: 'band', data: ['2021', '2022', '2023'] }]}
+              series={[{ data: [4200, 6000, 6500] }, { data: [14000, 17000, 19300] }, { data: [1000, 1000, 1600] }]}
+              width={1000}
+              height={450}
             />
           </Grid>
         </Grid>

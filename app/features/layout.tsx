@@ -14,19 +14,18 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import HomeIcon from '@mui/icons-material/Home';
-import StarIcon from '@mui/icons-material/Star';
-import ChecklistIcon from '@mui/icons-material/Checklist';
-import SettingsIcon from '@mui/icons-material/Settings';
-import SupportIcon from '@mui/icons-material/Support';
+import Article from '@mui/icons-material/Article';
+import SettingsIcon from '@mui/icons-material/Settings';;
 import LogoutIcon from '@mui/icons-material/Logout';
 import ThemeRegistry from '../theme/themeRegistry';
 import { logout } from "../context/api/services/authservice";
+import StoreProvider from '../redux/storeProvider';
 
-const DRAWER_WIDTH = 240;
+const DRAWER_WIDTH = 200;
 
 const LINKS = [
   { text: 'Home', href: '/features/dashboard', icon: HomeIcon },
-  { text: 'Starred', href: '/features/Started', icon: StarIcon }
+  { text: 'Listing', href: '/features/listing', icon: Article }
 
 ];
 
@@ -60,8 +59,7 @@ export default function ComLayout({ children }: { children: React.ReactNode }) {
             },
           }}
           variant="permanent"
-          anchor="left"
-        >
+          anchor="left">
           <Divider />
           <List>
             {LINKS.map(({ text, href, icon: Icon }) => (
@@ -108,9 +106,11 @@ export default function ComLayout({ children }: { children: React.ReactNode }) {
             bgcolor: 'background.default',
             ml: `${DRAWER_WIDTH}px`,
             paddingTop: 0,
-          }}
-        >
-          {children}
+            marginTop: 0
+          }}>
+          <StoreProvider>
+            {children}
+          </StoreProvider>
         </Box>
       </ThemeRegistry>
     </section>

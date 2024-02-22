@@ -33,11 +33,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               flexGrow: 1,
               bgcolor: 'background.default',
               ml: `${DRAWER_WIDTH}px`,
-              mt: ['48px', '56px', '64px'],
-              p: 3,
-            }}
-          >
-            {children}
+              mt: ['48px', '56px', '5px'],
+              p: 1,
+            }}>
+              {children}
           </Box>
         </ThemeRegistry>
       </body>
