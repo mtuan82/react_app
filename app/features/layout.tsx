@@ -25,7 +25,7 @@ const DRAWER_WIDTH = 200;
 
 const LINKS = [
   { text: 'Home', href: '/features/dashboard', icon: HomeIcon },
-  { text: 'Listing', href: '/features/listing', icon: Article }
+  { text: 'Table', href: '/features/table', icon: Article }
 
 ];
 
