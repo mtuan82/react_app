@@ -17,6 +17,10 @@ interface TableModel {
     tableTile: string,
     columns: Columns[],
     rows: Row[],
+    totalRow:number,
+    handleChangePage(page:number): void,
+    handleChangeRowsPerPage(rowsPerPage: number): void,
+    handleSelect(selected: readonly number[]):void
 }
 
 export interface Row {
@@ -42,16 +46,18 @@ export function InfoTable(param: TableModel) {
         setOrderBy(columnName);
     };
 
-    const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleSelectAll = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
             const newSelected = param.rows.map((n) => n.key);
             setSelected(newSelected);
+            param.handleSelect(newSelected);
             return;
         }
         setSelected([]);
+        param.handleSelect([]);
     };
 
-    const handleClick = (event: React.MouseEvent<unknown>, id: any) => {
+    const handleSelect = (event: React.MouseEvent<unknown>, id: any) => {
         const selectedIndex = selected.indexOf(id);
         let newSelected: readonly number[] = [];
 
@@ -68,14 +74,18 @@ export function InfoTable(param: TableModel) {
             );
         }
         setSelected(newSelected);
+        param.handleSelect(newSelected);
     };
 
     const handleChangePage = (event: unknown, newPage: number) => {
+        param.handleChangePage(newPage);
         setPage(newPage);
     };
 
     const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
         setRowsPerPage(parseInt(event.target.value, 10));
+        param.handleChangeRowsPerPage(parseInt(event.target.value, 10));
+        param.handleChangePage(0);
         setPage(0);
     };
 
@@ -86,7 +96,7 @@ export function InfoTable(param: TableModel) {
     const isSelected = (id: any) => selected.indexOf(id) !== -1;
 
     // Avoid a layout jump when reaching the last page with empty rows.
-    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - param.rows.length) : 0;
+    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - param.totalRow) : 0;
 
     return (
         <Box sx={{ width: '100%' }}>
@@ -101,20 +111,20 @@ export function InfoTable(param: TableModel) {
                             numSelected={selected.length}
                             order={order}
                             orderBy={orderBy}
-                            onSelectAllClick={handleSelectAllClick}
+                            onSelectAllClick={handleSelectAll}
                             onRequestSort={handleRequestSort}
-                            rowCount={param.rows.length}
+                            rowCount={param.totalRow}
                             columns={param.columns} />
                         <TableBody>
                             {
-                                param.rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index, array) => {
+                                param.rows.map((row, index, array) => {
                                     const isItemSelected = isSelected(row.key);
                                     const labelId = `enhanced-table-checkbox-${index}`;
                                     
                                     return (
                                         <TableRow
                                             hover
-                                            onClick={(event) => handleClick(event, row.key)}
+                                            onClick={(event) => handleSelect(event, row.key)}
                                             role="checkbox"
                                             aria-checked={isItemSelected}
                                             tabIndex={-1}
@@ -157,7 +167,7 @@ export function InfoTable(param: TableModel) {
                 <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
                     component="div"
-                    count={param.rows.length}
+                    count={param.totalRow}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}
@@ -166,8 +176,7 @@ export function InfoTable(param: TableModel) {
             </Paper>
             <FormControlLabel
                 control={<Switch checked={dense} onChange={handleChangeDense} />}
-                label="Dense padding"
-            />
+                label="Dense padding"/>
         </Box >
     );
 }

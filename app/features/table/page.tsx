@@ -57,12 +57,24 @@ var rows: Row[] = [
     { key:13, model: { id:13, name:'Oreo', calories:305, carbs:3.7, fat:67, protein: 4.3 }},
 ];
 
+
 export default function Table() {
+    const [page, setPage] = React.useState(0);
+    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [selected, setSelected] = React.useState<readonly number[]>([]);
+
+    console.log("page:" + page + "rowsPerPage:" + rowsPerPage)
+    console.log(selected)
+
     return (
         <InfoTable
             tableTile='Table Title'
+            totalRow={rows.length}
             columns={cols}
-            rows={rows}>
+            rows={rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}
+            handleChangeRowsPerPage={(rowsPerPage) => setRowsPerPage(rowsPerPage)}
+            handleChangePage={(page) => setPage(page)}
+            handleSelect={(seleted) => setSelected(seleted)}>
         </InfoTable>
     );
 }
