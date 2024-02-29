@@ -59,12 +59,15 @@ var rows: Row[] = [
 
 
 export default function Table() {
+    const [order, setOrder] = React.useState<string>('asc');
+    const [orderBy, setOrderBy] = React.useState<string>();
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const [selected, setSelected] = React.useState<readonly number[]>([]);
 
-    console.log("page:" + page + "rowsPerPage:" + rowsPerPage)
+    console.log("page:" + page + " rowsPerPage:" + rowsPerPage)
     console.log(selected)
+    console.log("column:" + orderBy + " order:" + order)
 
     return (
         <InfoTable
@@ -74,7 +77,8 @@ export default function Table() {
             rows={rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}
             handleChangeRowsPerPage={(rowsPerPage) => setRowsPerPage(rowsPerPage)}
             handleChangePage={(page) => setPage(page)}
-            handleSelect={(seleted) => setSelected(seleted)}>
+            handleSelect={(seleted) => setSelected(seleted)}
+            handleRequestSort={(column,order) => { setOrder(order); setOrderBy(column) }}>
         </InfoTable>
     );
 }

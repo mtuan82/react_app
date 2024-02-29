@@ -20,7 +20,8 @@ interface TableModel {
     totalRow:number,
     handleChangePage(page:number): void,
     handleChangeRowsPerPage(rowsPerPage: number): void,
-    handleSelect(selected: readonly number[]):void
+    handleSelect(selected: readonly number[]):void,
+    handleRequestSort(column:string, order:string):void
 }
 
 export interface Row {
@@ -33,17 +34,16 @@ export function InfoTable(param: TableModel) {
     const [orderBy, setOrderBy] = React.useState<string>();
     const [selected, setSelected] = React.useState<readonly number[]>([]);
     const [page, setPage] = React.useState(0);
-    const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
     const handleRequestSort = (
         event: React.MouseEvent<unknown>,
         columnName: string,
     ) => {
-        console.log("sort " + columnName)
         const isAsc = orderBy === columnName && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(columnName);
+        param.handleRequestSort(columnName,isAsc ? 'desc' : 'asc');
     };
 
     const handleSelectAll = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -89,10 +89,6 @@ export function InfoTable(param: TableModel) {
         setPage(0);
     };
 
-    const handleChangeDense = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setDense(event.target.checked);
-    };
-
     const isSelected = (id: any) => selected.indexOf(id) !== -1;
 
     // Avoid a layout jump when reaching the last page with empty rows.
@@ -105,8 +101,7 @@ export function InfoTable(param: TableModel) {
                 <TableContainer>
                     <Table
                         sx={{ minWidth: 750 }}
-                        aria-labelledby="tableTitle"
-                        size={dense ? 'small' : 'medium'}>
+                        aria-labelledby="tableTitle">
                         <EnhancedTableHead
                             numSelected={selected.length}
                             order={order}
@@ -156,7 +151,7 @@ export function InfoTable(param: TableModel) {
                                 emptyRows > 0 && (
                                     <TableRow
                                         style={{
-                                            height: (dense ? 33 : 53) * emptyRows,
+                                            height: 53 * emptyRows,
                                         }}>
                                         <TableCell colSpan={6} />
                                     </TableRow>)
@@ -174,9 +169,6 @@ export function InfoTable(param: TableModel) {
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
             </Paper>
-            <FormControlLabel
-                control={<Switch checked={dense} onChange={handleChangeDense} />}
-                label="Dense padding"/>
         </Box >
     );
 }
