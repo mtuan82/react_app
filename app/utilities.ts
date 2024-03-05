@@ -5,8 +5,7 @@ export function isExpiredToken(token: any): boolean {
     // JWT exp is in seconds
     var dateNow = new Date().getTime();
     var exp = Date.parse(token.exp);
-    console.log(exp)
-    console.log(dateNow)
+
     if (exp < dateNow) {
         console.log("Token expired. " + exp);
         return false;

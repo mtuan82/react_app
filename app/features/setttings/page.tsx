@@ -5,8 +5,11 @@ import Grid from '@mui/material/Unstable_Grid2';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Divider from '@mui/material/Divider';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -17,21 +20,32 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function Settings() {
     return (
-        <Box>
-            <Grid container spacing={2} columns={16}>
-                <Grid xs={5}>
-                    <Item sx={{textAlign: 'center'}}>
-                        <div style={{ display: 'inline-block', marginTop: 30 }}>
-                            <Avatar sx={{ width: 100, height: 100 }} alt="Remy Sharp" src="https://api-prod-minimal-v510.vercel.app/assets/images/avatar/avatar_25.jpg" />
+        <Box sx={{ display: 'block' }}>
+            <Grid>
+                <Item sx={{ paddingLeft: 3, textAlign: 'left' }}>
+                    <Typography sx={{ marginLeft: 2, paddingTop: 3, paddingBottom: 4, fontSize: 24 }}> Notifications</Typography>
+                    <Divider></Divider>
+                    <div style={{display:'flex'}}>
+                        <div>
+                            <Typography sx={{ marginLeft: 2, paddingTop: 3, paddingBottom: 4, fontSize: 24 }}> Notification</Typography>
+                            <FormGroup>
+                                <FormControlLabel control={<Checkbox defaultChecked />} label="Email" />
+                                <FormControlLabel control={<Checkbox />} label="Push Notifications" />
+                                <FormControlLabel control={<Checkbox />} label="Text Messages" />
+                                <FormControlLabel control={<Checkbox />} label="Phone calls" />
+                            </FormGroup>
                         </div>
-                        <Typography sx={{ paddingTop: 2 }}>Allowed *.jpeg, *.jpg, *.png, *.gif</Typography>
-                        <Typography sx={{ paddingBottom: 5 }}> max size of 3 Mb</Typography>
-                        <Button sx={{ marginBottom: 5 }} variant="outlined" color="error">Delete User</Button>
-                    </Item>
-                </Grid>
-                <Grid xs={11} sx={{textAlign: 'left'}}>
-                    <Item>info</Item>
-                </Grid>
+                        <div style={{paddingLeft:200}}>
+                            <Typography sx={{ marginLeft: 2, paddingTop: 3, paddingBottom: 4, fontSize: 24 }}> Message</Typography>
+                            <FormGroup>
+                                <FormControlLabel control={<Checkbox defaultChecked />} label="Email" />
+                                <FormControlLabel control={<Checkbox />} label="Push Notifications" />
+                                <FormControlLabel control={<Checkbox />} label="Text Messages" />
+                            </FormGroup>
+                        </div>
+                    </div>
+                    <div style={{textAlign:'right',padding:5}}><Button variant="contained" color="primary">Save</Button></div>
+                </Item>
             </Grid>
         </Box>
     )

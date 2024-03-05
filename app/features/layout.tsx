@@ -20,6 +20,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import ThemeRegistry from '../theme/themeRegistry';
 import { logout } from "../context/api/services/authservice";
 import StoreProvider from '../redux/storeProvider';
+import { AccountBox } from '@mui/icons-material';
 
 const DRAWER_WIDTH = 200;
 
@@ -30,6 +31,7 @@ const LINKS = [
 ];
 
 const PLACEHOLDER_LINKS = [
+  { text: 'Account', href: '/features/account', icon: AccountBox },
   { text: 'Settings', href: '/features/setttings', icon: SettingsIcon }
 ];
 
@@ -39,9 +41,9 @@ export default function ComLayout({ children }: { children: React.ReactNode }) {
     <section>
       <ThemeRegistry>
         <AppBar position="fixed" sx={{ zIndex: 2000 }}>
-          <Toolbar sx={{ backgroundColor: 'background.paper' }}>
-            <DashboardIcon sx={{ color: '#444', mr: 2, transform: 'translateY(-2px)' }} />
-            <Typography variant="h6" color="text.primary">
+          <Toolbar sx={{ backgroundColor: '#f50057' }}>
+            <DashboardIcon sx={{ color: 'white', mr: 2, transform: 'translateY(-2px)' }} />
+            <Typography variant="h6" color="white">
               Demo Next.js Router
             </Typography>
           </Toolbar>
