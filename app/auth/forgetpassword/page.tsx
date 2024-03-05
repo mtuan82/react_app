@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useRouter } from "next/navigation";
 import { Typography } from '@mui/material';
-import { forgotPassword } from "../../context/api/services/authservice";
+import { forgotPassword } from "../../api/services/authservice";
 
 export default function ForgotPasswordForm() {
     const [email, setEmail] = useState("");

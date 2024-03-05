@@ -7,8 +7,8 @@ import Button from '@mui/material/Button';
 import { useRouter } from "next/navigation";
 import { Typography } from '@mui/material';
 import Link from 'next/link';
-import { User } from "../../context/api/interfaces/User";
-import { login } from "../../context/api/services/authservice";
+import { User } from "../../api/interfaces/User";
+import { login } from "../../api/services/authservice";
 
 export default function SignupForm() {
     const [username, setUsername] = useState("");

@@ -18,7 +18,7 @@ import Article from '@mui/icons-material/Article';
 import SettingsIcon from '@mui/icons-material/Settings';;
 import LogoutIcon from '@mui/icons-material/Logout';
 import ThemeRegistry from '../theme/themeRegistry';
-import { logout } from "../context/api/services/authservice";
+import { logout } from "../api/services/authservice";
 import StoreProvider from '../redux/storeProvider';
 import { AccountBox } from '@mui/icons-material';
 
