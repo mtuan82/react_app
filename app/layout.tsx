@@ -12,7 +12,7 @@ const DRAWER_WIDTH = 10;
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   
   return (
-    <html lang="en">
+    <html>
       <body>
         <ThemeRegistry>
           <Box sx={{ flexGrow: 1 }}>

@@ -6,20 +6,24 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-export default function MediaCard({ heading, text }: { heading: string; text: string }) {
+export default function MediaCard({ heading, text, imgSrc }: { heading: string; text: string, imgSrc: string }) {
+
   return (
     <Card>
-      <Image
-        alt="Random image"
-        src=""
-        width={640}
-        height={480}
-        style={{
-          maxWidth: '100%',
-          height: '200px',
-          objectFit: 'cover',
-        }}
-      />
+      {
+        imgSrc != "" ?
+          <Image
+            alt="Random image"
+            src={imgSrc}
+            width={640}
+            height={480}
+            style={{
+              maxWidth: '100%',
+              height: '200px',
+              objectFit: 'cover',
+            }}
+          /> : ""
+      }
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {heading}

@@ -4,13 +4,6 @@ import type { NextRequest } from 'next/server'
 import { jwtDecode } from "jwt-decode";
 import { isExpiredToken } from './app/utilities'
 
-// export const config = {
-//     matcher: [
-//         "/auth/:path*",
-//         "/features/:path*",
-//     ]
-// }
-
 export default function middleware(req: NextRequest) {
 
     var cookieToken = req.cookies.get("token")?.value;

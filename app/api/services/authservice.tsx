@@ -5,29 +5,37 @@ import { getCookie, deleteCookie, setCookie, hasCookie } from 'cookies-next';
 
 const apiUrl = process.env.API_URL;
 
-export function login(data: User): ResUser {
+export async function login(data: User): Promise<ResUser> {
     var res: ResUser = {
         status: 0,
         token: "",
         errorMsg: ""
     }
-    if (hasCookie("token"))
-    {
+    if (hasCookie("token")) {
         deleteCookie("token");
     }
-
-const tokenArray = [
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWQiOiJZekV6TUdkb01ISm5PSEJpT0cxaWJEaHlOVEE9IiwicmVzcG9uc2VfdHlwZSI6ImNvZGUiLCJzY29wZSI6ImEsIGIiLCJpc3MiOiJiamhJUmpNMWNYcGFhMjF6ZFd0SVNucDZlamxNYms0NGJUbE5aamszZFhFPSIsInN1YiI6Ill6RXpNR2RvTUhKbk9IQmlPRzFpYkRoeU5UQT0iLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDozMDAwL2F1dGgvbG9naW4iLCJqdGkiOiIxNTE2MjM5MDIyIiwiZXhwIjoiMjAyNC0wNS0xN1QwNzowOTo0OC4wMDArMDU0NSJ9.8IlJjcQaAYGJIYbKCj-t40cKK_rzebWUvEuEnQvyD8Q",
-   // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWQiOiJZekV6TUdkb01ISm5PSEJpT0cxaWJEaHlOVEE9IiwicmVzcG9uc2VfdHlwZSI6ImNvZGUiLCJzY29wZSI6ImEsIGIiLCJpc3MiOiJiamhJUmpNMWNYcGFhMjF6ZFd0SVNucDZlamxNYms0NGJUbE5aamszZFhFPSIsInN1YiI6Ill6RXpNR2RvTUhKbk9IQmlPRzFpYkRoeU5UQT0iLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDozMDAwL2F1dGgvbG9naW4iLCJqdGkiOiIxNTE2MjM5MDIyIiwiZXhwIjoiMjAyMi0wNS0xN1QwNzowOTo0OC4wMDArMDU0NSJ9.p43HpUUjepG-PG4R5obLBrVqkMDQWdnvkDTgIBKnQSY",
-  ];    
-    //const result = axios.post(`${apiUrl}/auth`, data);
-    res = {
-        status: 200,
-        token: tokenArray[Math.floor(Math.random() * tokenArray.length)],
-        errorMsg: ""
+    //${apiUrl}
+    const result = await axios.post(`http://localhost:7070/api/Account/Login`, data)
+        .then(function (response) {
+            return res = {
+                status: response.status,
+                token: response.data.token,
+                errorMsg: ""
+            };
+        })
+        .catch(function (error) {
+            return res = {
+                status: error.status,
+                token: "",
+                errorMsg: error.data.error
+            };
+        });
+    setCookie("token", result.token);
+    return res = {
+        status: result.status,
+        token: result.token,
+        errorMsg: result.errorMsg
     };
-    setCookie("token", res.token);
-    return res;
 }
 
 export function getCurrentUser(): string {
