@@ -16,22 +16,21 @@ export default function SignupForm() {
     const [errorMsg, setErrorMsg] = useState("");
     const router = useRouter();
 
-    const loginUser = (event: any): boolean => {
+    const loginUser = (event: any): void => {
         event.preventDefault();
         const user: User = {
-            username: username,
+            email: username,
             password: password
         };
-        var res = login(user);
-        if (res.status == 200) {
-            window.localStorage.setItem("token", res.token);
-            setErrorMsg("");
-            return true;
-        }
-        else {
-            setErrorMsg(res.errorMsg);
-            return false;
-        }
+        login(user).then((response) => {
+            if (response.status == 200) {
+              setErrorMsg("");
+              router.push("/features/dashboard");
+            }
+          }).catch((error) => {
+            setErrorMsg(error.errorMsg);
+            alert(error.errorMsg);
+          });
     }
 
     return (
@@ -44,7 +43,7 @@ export default function SignupForm() {
             }}
             noValidate
             autoComplete="off"
-            onSubmit={(event) => loginUser(event) == true ? router.push("/features/dashboard") : alert(errorMsg)}
+            onSubmit={(event) => loginUser(event)}
         >
             <div style={{ display: 'inline-grid' }}>
                 <Typography sx={{ fontSize: 20, fontWeight: 1000 }}>Get started absolutely free</Typography>

@@ -12,17 +12,16 @@ export default function ForgotPasswordForm() {
     const [errorMsg, setErrorMsg] = useState("");
     const router = useRouter();
 
-    const forgotPass = (event: any): boolean => {
+    const forgotPass = (event: any): void => {
         event.preventDefault();
-        var res = forgotPassword(email);
-        if (res.status == 200) {
+        var res = forgotPassword(email)
+        .then( () => {
             setErrorMsg("");
-            return true;
-        }
-        else {
-            setErrorMsg(res.errorMsg);
-            return false;
-        }
+            router.push("/auth/login");
+        })
+        .catch( (err) =>{
+            setErrorMsg(err.errorMsg);
+        });
     }
 
     return (
@@ -35,7 +34,7 @@ export default function ForgotPasswordForm() {
             }}
             noValidate
             autoComplete="off"
-            onSubmit={(event) => forgotPass(event) == true ? router.push("/auth/login") : alert(errorMsg)}
+            onSubmit={(event) => forgotPass(event)}
         >
             <div style={{ display: 'inline-grid' }}>
                 <Typography sx={{ fontSize: 20, fontWeight: 1000 }}>Forgot your password?</Typography>

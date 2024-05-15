@@ -3,7 +3,7 @@ import { jwtDecode } from "jwt-decode";
 import { User, ResUser } from "../interfaces/User";
 import { getCookie, deleteCookie, setCookie, hasCookie } from 'cookies-next';
 
-const apiUrl = process.env.API_URL;
+const apiUrl = process.env.NEXT_PUBLIC_API_URL; 
 
 export async function login(data: User): Promise<ResUser> {
     var res: ResUser = {
@@ -14,8 +14,8 @@ export async function login(data: User): Promise<ResUser> {
     if (hasCookie("token")) {
         deleteCookie("token");
     }
-    //${apiUrl}
-    const result = await axios.post(`http://localhost:7070/api/Account/Login`, data)
+
+    const result = await axios.post(`${apiUrl}/api/Account/Login`, data)
         .then(function (response) {
             return res = {
                 status: response.status,
@@ -38,7 +38,7 @@ export async function login(data: User): Promise<ResUser> {
     };
 }
 
-export function getCurrentUser(): string {
+export async function getCurrentUser(): Promise<string> {
     try {
         const token = getCookie("token");
         if (token)
@@ -50,11 +50,11 @@ export function getCurrentUser(): string {
     }
 }
 
-export function logout(): void {
+export async function logout(): Promise<void> {
     deleteCookie("token");
 }
 
-export function forgotPassword(email: string): ResUser {
+export async function forgotPassword(email: string): Promise<ResUser> {
     var res: ResUser = {
         status: 0,
         token: "",
