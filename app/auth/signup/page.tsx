@@ -52,19 +52,16 @@ export default function SignupForm() {
                     required
                     id="firstname"
                     label="First Name"
-                    variant="filled"
                 />
                 <TextField
                     required
                     id="lastname"
                     label="Last Name"
-                    variant="filled"
                 />
                 <TextField
                     required
                     id="username"
                     label="User Name"
-                    variant="filled"
                     onChange={(e) => setUsername(e.target.value)}
                 />
                 <TextField
@@ -73,7 +70,6 @@ export default function SignupForm() {
                     label="Password"
                     type="password"
                     autoComplete="current-password"
-                    variant="filled"
                     onChange={(e) => setPassword(e.target.value)}
                 />
                 <Button type='submit' variant="contained">Create Account</Button>

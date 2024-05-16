@@ -44,7 +44,6 @@ export default function ForgotPasswordForm() {
                     required
                     id="email"
                     label="Email"
-                    variant="filled"
                     onChange={(e) => setEmail(e.target.value)}
                 />
                 <Button type='submit' variant="contained">Send Email</Button>
