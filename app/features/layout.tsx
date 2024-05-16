@@ -21,6 +21,8 @@ import ThemeRegistry from '../theme/themeRegistry';
 import { logout } from "../api/services/authservice";
 import StoreProvider from '../redux/storeProvider';
 import { AccountBox } from '@mui/icons-material';
+import { getCurrentUser,getClaimUser } from "../api/services/authservice";
+import { useEffect, useState } from 'react';
 
 const DRAWER_WIDTH = 200;
 
@@ -36,6 +38,12 @@ const PLACEHOLDER_LINKS = [
 ];
 
 export default function ComLayout({ children }: { children: React.ReactNode }) {
+  const [username, setUsername] = useState("");
+
+  useEffect(() => {
+    setUsername(getCurrentUser());
+    getClaimUser()
+  }, []);
 
   return (
     <section>
@@ -43,8 +51,11 @@ export default function ComLayout({ children }: { children: React.ReactNode }) {
         <AppBar position="fixed" sx={{ zIndex: 2000 }}>
           <Toolbar sx={{ backgroundColor: '#f50057' }}>
             <DashboardIcon sx={{ color: 'white', mr: 2, transform: 'translateY(-2px)' }} />
-            <Typography variant="h6" color="white">
+            <Typography variant="h6" color="white" sx={{ flexGrow: 1 }}>
               Demo Next.js Router
+            </Typography>
+            <Typography>
+              { username }
             </Typography>
           </Toolbar>
         </AppBar>

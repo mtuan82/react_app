@@ -1,9 +1,9 @@
 import axios from "axios";
-import { jwtDecode } from "jwt-decode";
+import { jwtDecode,JwtPayload } from "jwt-decode";
 import { User, ResUser } from "../interfaces/User";
 import { getCookie, deleteCookie, setCookie, hasCookie } from 'cookies-next';
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL; 
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export async function login(data: User): Promise<ResUser> {
     var res: ResUser = {
@@ -38,15 +38,48 @@ export async function login(data: User): Promise<ResUser> {
     };
 }
 
-export async function getCurrentUser(): Promise<string> {
+export function getCurrentUser(): string {
     try {
         const token = getCookie("token");
-        if (token)
-            return jwtDecode(token);
+        type customJwtPayload = JwtPayload & { 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name': string };
+        if (token) {
+            let data = jwtDecode<customJwtPayload>(token);
+            return data["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
+        }
         else
             return "";
     } catch (error) {
         return "";
+    }
+}
+
+export function getRoleUser(): string {
+    try {
+        const token = getCookie("token");
+        type customJwtPayload = JwtPayload & { "http://schemas.microsoft.com/ws/2008/06/identity/claims/role":string };
+        if (token) {
+            let data = jwtDecode<customJwtPayload>(token);
+            return data["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+        }
+        else
+            return "";
+    } catch (error) {
+        return "";
+    }
+}
+
+export function getClaimUser(): string[] {
+    try {
+        const token = getCookie("token");
+        type customJwtPayload = JwtPayload & { scope:string[] };
+        if (token) {debugger
+            let data = jwtDecode<customJwtPayload>(token);
+            return data["scope"];
+        }
+        else
+            return [];
+    } catch (error) {
+        return [];
     }
 }
 
