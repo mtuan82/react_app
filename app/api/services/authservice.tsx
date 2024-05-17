@@ -5,37 +5,35 @@ import { getCookie, deleteCookie, setCookie, hasCookie } from 'cookies-next';
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-export async function login(data: User): Promise<ResUser> {
-    var res: ResUser = {
-        status: 0,
-        token: "",
-        errorMsg: ""
+export async function register(data: any): Promise<string> {
+
+    if (data == null) {
+        return "Account info is required";
     }
+
+    await axios.post(`${apiUrl}/api/Account/Register`, data)
+        .then( (response) => {
+            return "";
+        })
+        .catch( (error) => {
+            throw error;
+        });
+    return "";
+}
+
+export async function login(data: User): Promise<void> {
+
     if (hasCookie("token")) {
         deleteCookie("token");
     }
 
-    const result = await axios.post(`${apiUrl}/api/Account/Login`, data)
-        .then(function (response) {
-            return res = {
-                status: response.status,
-                token: response.data.token,
-                errorMsg: ""
-            };
+    await axios.post(`${apiUrl}/api/Account/Login`, data)
+        .then( (response) => {
+            setCookie("token", response.data.token);
         })
-        .catch(function (error) {
-            return res = {
-                status: error.status,
-                token: "",
-                errorMsg: error.data.error
-            };
+        .catch( (error) => {
+            throw error;
         });
-    setCookie("token", result.token);
-    return res = {
-        status: result.status,
-        token: result.token,
-        errorMsg: result.errorMsg
-    };
 }
 
 export function getCurrentUser(): string {
@@ -72,7 +70,7 @@ export function getClaimUser(): string[] {
     try {
         const token = getCookie("token");
         type customJwtPayload = JwtPayload & { scope:string[] };
-        if (token) {debugger
+        if (token) {
             let data = jwtDecode<customJwtPayload>(token);
             return data["scope"];
         }

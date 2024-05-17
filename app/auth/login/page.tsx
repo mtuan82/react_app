@@ -23,18 +23,17 @@ export default function LoginForm() {
       password: password
     };
 
-    login(user).then((response) => {
-      if (response.status == 200) {
+    login(user).then(() => {
         setErrorMsg("");
         router.push("/features/dashboard");
-      }
-    }).catch((error) => {
-      setErrorMsg(error.errorMsg);
-      alert(error.errorMsg);
+    }).catch((err) => {
+      setErrorMsg(err.response.data.error);
+      alert(err.response.data.error);
     });
   }
 
   return (
+    
     <Box 
       component="form"
       sx={{

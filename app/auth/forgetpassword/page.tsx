@@ -34,8 +34,7 @@ export default function ForgotPasswordForm() {
             }}
             noValidate
             autoComplete="off"
-            onSubmit={(event) => forgotPass(event)}
-        >
+            onSubmit={(event) => forgotPass(event)}>
             <div style={{ display: 'inline-grid' }}>
                 <Typography sx={{ fontSize: 20, fontWeight: 1000 }}>Forgot your password?</Typography>
                 <Typography fontSize="2"> Please enter the email address associated with your account </Typography>

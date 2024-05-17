@@ -42,7 +42,6 @@ export default function ComLayout({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     setUsername(getCurrentUser());
-    getClaimUser()
   }, []);
 
   return (
