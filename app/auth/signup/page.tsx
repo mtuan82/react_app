@@ -97,7 +97,7 @@ export default function SignupForm() {
         return true;
     }
 
-    const doRegister = (event: any): void => {
+    const doRegistration = (event: any): void => {
         event.preventDefault();
         if (!validate())
             return;
@@ -118,7 +118,7 @@ export default function SignupForm() {
             }}
             noValidate
             autoComplete="off"
-            onSubmit={(event) => doRegister(event)}>
+            onSubmit={(event) => doRegistration(event)}>
             <div style={{ display: 'inline-grid' }}>
                 {
                     (errorMsg != "") ? <Typography fontSize="3" color="red"> {errorMsg} </Typography> : ""
