@@ -8,8 +8,6 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
 import { EnhancedTableHead, Columns, Order } from './tableHead';
 import { EnhancedTableToolbar } from './tableToolBar';
 
@@ -17,11 +15,12 @@ interface TableModel {
     tableTile: string,
     columns: Columns[],
     rows: Row[],
-    totalRow:number,
-    handleChangePage(page:number): void,
+    totalRow: number,
+    handleChangePage(page: number): void,
     handleChangeRowsPerPage(rowsPerPage: number): void,
-    handleSelect(selected: readonly number[]):void,
-    handleRequestSort(column:string, order:string):void
+    handleSelect(selected: readonly number[]): void,
+    handleRequestSort(column: string, order: string): void,
+    onDeleteRow(e: any):void
 }
 
 export interface Row {
@@ -43,7 +42,7 @@ export function InfoTable(param: TableModel) {
         const isAsc = orderBy === columnName && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(columnName);
-        param.handleRequestSort(columnName,isAsc ? 'desc' : 'asc');
+        param.handleRequestSort(columnName, isAsc ? 'desc' : 'asc');
     };
 
     const handleSelectAll = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -97,7 +96,7 @@ export function InfoTable(param: TableModel) {
     return (
         <Box sx={{ width: '100%' }}>
             <Paper sx={{ width: '100%', mb: 2 }}>
-                <EnhancedTableToolbar numSelected={selected.length} tableTile={param.tableTile} />
+                <EnhancedTableToolbar numSelected={selected.length} tableTile={param.tableTile} onDelete={ (e) => { param.onDeleteRow(e); setSelected([]); } } />
                 <TableContainer>
                     <Table
                         sx={{ minWidth: 750 }}
@@ -115,7 +114,7 @@ export function InfoTable(param: TableModel) {
                                 param.rows.map((row, index, array) => {
                                     const isItemSelected = isSelected(row.key);
                                     const labelId = `enhanced-table-checkbox-${index}`;
-                                    
+
                                     return (
                                         <TableRow
                                             hover
@@ -137,7 +136,6 @@ export function InfoTable(param: TableModel) {
                                             </TableCell>
                                             {
                                                 param.columns.map((col, index, array) => {
-                                                   
                                                     return (
                                                         <TableCell key={index + 1} align={col.align}>{row.model[col.id]}</TableCell>
                                                     )
@@ -153,7 +151,7 @@ export function InfoTable(param: TableModel) {
                                         style={{
                                             height: 53 * emptyRows,
                                         }}>
-                                        <TableCell colSpan={6} />
+                                        <TableCell colSpan={param.columns.length} />
                                     </TableRow>)
                             }
                         </TableBody>

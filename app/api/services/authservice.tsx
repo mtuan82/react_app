@@ -56,7 +56,7 @@ export function getRoleUser(): string {
         const token = getCookie("token");
         type customJwtPayload = JwtPayload & { "http://schemas.microsoft.com/ws/2008/06/identity/claims/role":string };
         if (token) {
-            let data = jwtDecode<customJwtPayload>(token);
+            let data = jwtDecode<customJwtPayload>(token); 
             return data["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
         }
         else

@@ -12,7 +12,7 @@ export interface Columns {
     id: string;
     label: string;
     numeric: boolean;
-    align:Align;
+    align: Align;
 }
 
 export type Order = 'asc' | 'desc';
@@ -50,7 +50,7 @@ export function EnhancedTableHead(props: EnhancedTableProps) {
                         }}
                     />
                 </TableCell>
-                { props.columns.map((headCell) => (
+                {props.columns.map((headCell) => (
                     <TableCell
                         key={headCell.id}
                         align={headCell.numeric ? 'right' : 'left'}
