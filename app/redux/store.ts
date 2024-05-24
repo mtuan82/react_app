@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { useDispatch, useSelector } from "react-redux"
-import rowReducer from '../features/table/rowSlice';
+import rowSlice from '../features/table/rowSlice';
 
 export const store = () => {
   return configureStore({
     reducer: {
-       rows: rowReducer
+       rows: rowSlice
     }
   })
 }
