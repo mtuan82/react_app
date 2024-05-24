@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { Row } from '../shared/table/InfoTable';
 
-const initialState: Row[] =  [
+const initialState: Row[] = [
   { key: 1, model: { id: 1, name: 'Cupcake', calories: 305, carbs: 3.7, fat: 67, protein: 100 } },
   { key: 2, model: { id: 2, name: 'Donut', calories: 452, carbs: 25.0, fat: 24, protein: 25 } },
   { key: 3, model: { id: 3, name: 'Eclair', calories: 305, carbs: 3.7, fat: 67, protein: 4. } },
@@ -18,19 +18,30 @@ const initialState: Row[] =  [
 ];
 
 export const rowSlice = createSlice({
-    name: 'row',
-    initialState,
-    reducers: {
-      addRow(state, action) {
-        state.push(action.payload);
-      },
-      deleteRow(state, action){
-        var id = state.findIndex(e => e.key == action.payload);
-        state.splice(id,1);
+  name: 'row',
+  initialState,
+  reducers: {
+    addRow(state, action) {
+      state.push(action.payload);
+    },
+    updateRow(state, action) {
+      const row: Row = action.payload
+      const existingRow = state.find(r => r.model.id === row.model.id)
+      if (existingRow) {
+        existingRow.model.name = row.model.name
+        existingRow.model.calories = row.model.calories
+        existingRow.model.carbs = row.model.carbs
+        existingRow.model.fat = row.model.fat
+        existingRow.model.protein = row.model.protein
       }
+    },
+    deleteRow(state, action) {
+      var id = state.findIndex(e => e.key == action.payload);
+      state.splice(id, 1);
     }
-  })
-  
-  export const { addRow, deleteRow } = rowSlice.actions
-  
-  export default rowSlice.reducer
+  }
+})
+
+export const { addRow, deleteRow, updateRow } = rowSlice.actions
+
+export default rowSlice.reducer
