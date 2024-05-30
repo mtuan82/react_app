@@ -36,8 +36,7 @@ export const rowSlice = createSlice({
       }
     },
     deleteRow(state, action) {
-      var id = state.findIndex(e => e.key == action.payload);
-      state.splice(id, 1);
+      return state.filter(r => r.key != action.payload);
     }
   }
 })
